@@ -1,7 +1,9 @@
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support import expected_conditions as EC
 import time
+from selenium.webdriver.support.ui import WebDriverWait
 class LoginPage:
     def __init__(self,driver) :
         self.driver = driver
@@ -17,13 +19,28 @@ class LoginPage:
 class News:
     def __init__(self,driver):
         self.driver = driver
-        self.news_el = driver.find_element(By.XPATH, "//span[@class='p-button-label' and contains(text(), '查看更多')]/..")
-        # self.todo_work = driver.find_element(By.XPATH, "//span[@class='p-button-label' and contains(text(), '待辦工作')]/..")
-        # self.todo_work_el = driver.find_element(By.XPATH, "/html/body/app-root/his-navigation-layout/div[2]/his-news-info/div/div[3]/p-fieldset[1]")
+        
+
     def click_news(self):
+        # 使用XPATH 來定位 「查看更多」按鈕，使用dev_tools 的copy XPATH
+        # self.news_el = driver.find_element(By.XPATH, "//span[@class='p-button-label' and contains(text(), '查看更多')]/..")
+        self.news_el = driver.find_element(By.XPATH, "/html/body/app-root/his-navigation-layout/div[2]/his-user-profile/div/div[2]/div[1]/div/button/span")
         self.news_el.click()
-    def click_todo_work(self):
-        self.todo_work_el.click()
+    
+    def search_news(self,text):
+        wait = WebDriverWait(self.driver, 10)  # 等待最多10秒
+        self.search_input = wait.until(EC.visibility_of_element_located((By.XPATH, '//input[@placeholder="搜尋"]')))
+        self.search_input.send_keys(text)
+    # def click_todo_work(self):
+    #     wait = WebDriverWait(self.driver, 10)  # 等待最多10秒
+    #     self.fieldset_legend = wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, 'fieldset p-fieldset-legend')))
+    #             # 验证是否为“公告訊息”，并点击
+    #     if self.fieldset_legend.text == '公告訊息':
+    #         print('找到“公告訊息”，现在点击它。')
+    #         self.fieldset_legend.click()
+    #     else:
+    #         print('没有找到“公告訊息”。')
+        # self.fieldset_legend.click()
 
 # Initialize the driver and navigate to the website
 driver = webdriver.Chrome()
@@ -39,8 +56,11 @@ time.sleep(5)
 # Instantiate the News and click the news
 news = News(driver)
 news.click_news()
-time.sleep(3)
-# news.click_todo_work()
+time.sleep(2)
+
+# jump to the news page and type whatever text to the search bar.
+news.search_news('de')
+time.sleep(6)
 # 給些時間讓網頁載入
 time.sleep(600)
 
