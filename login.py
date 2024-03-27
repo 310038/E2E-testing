@@ -4,6 +4,14 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 import time
 from selenium.webdriver.support.ui import WebDriverWait
+from dotenv import load_dotenv
+import os
+load_dotenv()
+
+username = os.getenv('USERNAME')
+password = os.getenv('PASSWORD')
+HEP = os.getenv('HEP')
+
 class LoginPage:
     def __init__(self,driver) :
         self.driver = driver
@@ -45,11 +53,11 @@ class News:
 # Initialize the driver and navigate to the website
 driver = webdriver.Chrome()
 driver.implicitly_wait(3)
-driver.get("https://his.hepiuscare.com.tw/hpc/login")
+driver.get(HEP)
 
 # Instantiate the LoginPage and login with valid credentials
 login_page = LoginPage(driver)
-login_page.login("Neo", "Neo")
+login_page.login(username, password)
 # 給些時間讓網頁載入
 time.sleep(5)
 

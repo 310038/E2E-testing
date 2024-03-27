@@ -7,18 +7,8 @@ import time
 driver = webdriver.Chrome()
 driver.implicitly_wait(10)
 # 打开醫療資訊系統的登录页面
-driver.get("https://his.hepiuscare.com.tw/hpc/login")
+driver.get("https://localhost:4200")
 
-# 找到用户名和密码的输入框，并输入凭据
-# username_input = driver.find_element(By.NAME, "username")
-# password_input = driver.find_element(By.NAME, "password")
-# 选择一种定位方式
-username_input = driver.find_element(By.ID,"UserName")
-username_input.send_keys("Neo")
-password_input = driver.find_element(By.CSS_SELECTOR,'input[placeholder="請輸入密碼"]')
-password_input.send_keys("Neo")
-# username_input.send_keys("your_username")
-# password_input.send_keys("your_password")
 
 # 找到登录按钮并点击 ，使用XPATH 通过按钮内部的 span 的类名来定位
 login_button = driver.find_element(By.XPATH, "//span[@class='p-button-label' and contains(text(), '登入')]/..")
